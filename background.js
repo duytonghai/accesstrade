@@ -6,7 +6,7 @@
 var BASE_URL = 'https://go.isclix.com/deep_link/5140210465117321985?url=';
 chrome.runtime.onInstalled.addListener(function() {
   chrome.storage.sync.set({color: '#3aa757'}, function() {
-    console.log('The color is green.');
+    console.log('Working...');
   });
 
   // onUpdated should fire when the selected tab is changed or a link is clicked
@@ -25,10 +25,10 @@ chrome.runtime.onInstalled.addListener(function() {
       }
 
       if (isValidPublisher) {
-        var accessTradeURL = BASE_URL + myURL + '&utm_source=accesstrade';
+        var accessTradeURL = BASE_URL + encodeURIComponent(myURL) + '&utm_source=accesstrade';
         console.log(">>>>>>>>>>>>>>>>>>>>>>>", accessTradeURL);
 
-        window.location.replace(accessTradeURL, '_blank');
+        window.location.replace(accessTradeURL);
       }
     });
   });

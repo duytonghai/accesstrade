@@ -5,3 +5,9 @@
 2. Access ```chrome://extensions```
 3. Load Unpackage from your source code you just cloned from Github
 4. Access to websites Tiki, Shopee, Sendo, Lazada to buy goods and receive cashback after form 1 - 2 months
+
+### Import extension
+![image](/accesstrade/images/load_ext.png)
+
+### Result from Access Trade
+![image](/accesstrade/images/result_access_trade.png)
