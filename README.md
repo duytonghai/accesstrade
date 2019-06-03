@@ -7,7 +7,7 @@
 4. Access to websites Tiki, Shopee, Sendo, Lazada to buy goods and receive cashback after form 1 - 2 months
 
 ### Import extension
-![image](/accesstrade/images/load_ext.png)
+![image](https://github.com/duytonghai/accesstrade/blob/master/images/load_ext.png)
 
 ### Result from Access Trade
-![image](/accesstrade/images/result_access_trade.png)
+![image](https://github.com/duytonghai/accesstrade/blob/master/images/result_access_trade.png)
