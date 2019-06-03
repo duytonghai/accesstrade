@@ -16,7 +16,7 @@ chrome.runtime.onInstalled.addListener(function() {
       myUrl = tab.url || '';
 
       var isValidPublisher = false;
-      var publishers = ['tiki.vn/', 'shopee.vn/', 'sendo.vn/', 'adayroi.com/'];
+      var publishers = ['tiki.vn/', 'shopee.vn/', 'sendo.vn/', 'adayroi.com/', 'fado.vn'];
       publishers.forEach(function(item) {
         if (myUrl.includes(item)) {
           isValidPublisher = true;
