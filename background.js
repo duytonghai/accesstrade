@@ -10,25 +10,25 @@ chrome.runtime.onInstalled.addListener(function() {
   });
 
   // onUpdated should fire when the selected tab is changed or a link is clicked
-  var myURL;
+  var myUrl;
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     chrome.tabs.getSelected(null, function(tab) {
-      var isValidPublisher;
-      var publishers = ['www.tiki.com/', 'www.shopee.vn/', 'www.sendo.vn/', 'www.adayroi.com/'];
-      myURL = tab.url || '';
+      myUrl = tab.url || '';
 
-      // Only support for publishers such as Tiki, Shopee, Sendo, Adayroi
-      for (var i = 0; i< publishers.length; i++) {
-        if (myURL.substring(publishers[i])) {
+      var isValidPublisher = false;
+      var publishers = ['tiki.vn/', 'shopee.vn/', 'sendo.vn/', 'adayroi.com/'];
+      publishers.forEach(function(item) {
+        if (myUrl.includes(item)) {
           isValidPublisher = true;
+          return;
         }
-      }
+      });
 
       if (isValidPublisher) {
-        var accessTradeURL = BASE_URL + encodeURIComponent(myURL) + '&utm_source=accesstrade';
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>", accessTradeURL);
+        var accessTradeUrl = `${BASE_URL}${myUrl}&utm_source=accesstrade`;
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>", accessTradeUrl);
 
-        window.location.replace(accessTradeURL);
+        window.location.replace(accessTradeUrl);
       }
     });
   });
