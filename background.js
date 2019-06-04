@@ -12,6 +12,7 @@ function verifyPublisher(requestUrl) {
     'shopee.vn/',
     'sendo.vn/',
     'adayroi.com/',
+    'lazada.vn',
     'fado.vn'
   ];
 
@@ -32,28 +33,19 @@ chrome.runtime.onInstalled.addListener(function() {
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     chrome.tabs.getSelected(null, function(tab) {
       var myUrl = tab.url || '';
-
-      console.log("myURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>", myUrl);
       const isValidPublisher = verifyPublisher(myUrl);
+  
       if (isValidPublisher) {
-        const myUrlEncoded = encodeURIComponent(myUrl);
-        const accessTradeUrl = `${BASE_URL}${myUrlEncoded}`;
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>", accessTradeUrl);
-
-        /**
-         * Only open tab when
-         * * oldMyUrl is '' (first time)
-         * * 
-         */
-
-        if (oldMyUrl === '' || (myUrl !== oldMyUrl)) {
-          // var timeStamp = new Date().valueOf();
-          // oldMyUrl = `${myUrl}_${timeStamp}`;
-          window.open(accessTradeUrl);
-          var timestamp = new Date().valueOf();
-          oldMyUrl = myUrl + '__' + timestamp;
-        } else {
-          oldMyUrl = myUrl + '__' + timestamp;
+        if (oldMyUrl !== myUrl) {
+          console.log("myURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>", myUrl);
+          const isValidPublisher = verifyPublisher(myUrl);
+          if (isValidPublisher) {
+            const myUrlEncoded = encodeURIComponent(myUrl);
+            const accessTradeUrl = `${BASE_URL}${myUrlEncoded}`;
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>", accessTradeUrl);
+            oldMyUrl = myUrl;
+            window.open(accessTradeUrl);
+          }
         }
       }
     });
