@@ -3,8 +3,9 @@
 // found in the LICENSE file.
 'use strict';
 
+const LOCAL_STORAGE_KEY = 'links';
 const ACCESS_TRADE_KEY = '5140210465117321985';
-const  BASE_URL = `https://go.isclix.com/deep_link/${ACCESS_TRADE_KEY}?url=`;
+const BASE_URL = `https://go.isclix.com/deep_link/${ACCESS_TRADE_KEY}?url=`;
 
 function verifyPublisher(requestUrl) {
   const publishers = [
@@ -19,31 +20,49 @@ function verifyPublisher(requestUrl) {
   return publishers.find(item => requestUrl.includes(item)) ? true : false;
 }
 
-function resetOldUrl() {
-  
+function getStorage(key = LOCAL_STORAGE_KEY) {
+  var links = localStorage.getItem(key);
+  if (!links) {
+    links = [];
+  } else {
+    links = JSON.parse(links.toString());
+  }
+
+  return links;
+}
+
+function setStorage(newLink) {
+  var linkArray = getStorage(LOCAL_STORAGE_KEY);
+
+  if (linkArray.indexOf(newLink) === -1) {
+    linkArray.push(newLink);
+  }
+
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(linkArray));
+  return;
 }
 
 chrome.runtime.onInstalled.addListener(function() {
   chrome.storage.sync.set({color: '#3aa757'}, function() {
     console.log('Working...');
   });
-  var oldMyUrl = '';
 
   // onUpdated should fire when the selected tab is changed or a link is clicked
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     chrome.tabs.getSelected(null, function(tab) {
-      var myUrl = tab.url || '';
-      const isValidPublisher = verifyPublisher(myUrl);
+      var newLink = tab.url || '';
+      const isValidPublisher = verifyPublisher(newLink);
   
       if (isValidPublisher) {
-        if (oldMyUrl !== myUrl) {
-          console.log("myURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>", myUrl);
-          const isValidPublisher = verifyPublisher(myUrl);
-          if (isValidPublisher) {
-            const myUrlEncoded = encodeURIComponent(myUrl);
-            const accessTradeUrl = `${BASE_URL}${myUrlEncoded}`;
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>", accessTradeUrl);
-            oldMyUrl = myUrl;
+        const isValidPublisher = verifyPublisher(newLink);
+        if (isValidPublisher) {
+          const newLinkEncoded = encodeURIComponent(newLink);
+          const accessTradeUrl = `${BASE_URL}${newLinkEncoded}`;
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>", accessTradeUrl);
+
+          var linkArray = getStorage(LOCAL_STORAGE_KEY);
+          if (linkArray.indexOf(newLink) === -1 && newLink.length < 256) {
+            setStorage(newLink);
             window.open(accessTradeUrl);
           }
         }
