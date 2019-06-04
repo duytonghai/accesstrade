@@ -28,9 +28,12 @@ chrome.runtime.onInstalled.addListener(function() {
     chrome.tabs.getSelected(null, function(tab) {
       var myUrl = tab.url || '';
 
+      console.log("myURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>", myUrl);
+
       const isValidPublisher = verifyPublisher(myUrl);
       if (isValidPublisher) {
-        const  accessTradeUrl = `${BASE_URL}${myUrl}&utm_source=accesstrade`;
+        const myUrlEncoded = encodeURIComponent(myUrl);
+        const accessTradeUrl = `${BASE_URL}${myUrlEncoded}`;
         console.log(">>>>>>>>>>>>>>>>>>>>>>>", accessTradeUrl);
 
         window.location.href = accessTradeUrl;
