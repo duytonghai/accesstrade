@@ -33,7 +33,7 @@ chrome.runtime.onInstalled.addListener(function() {
         const  accessTradeUrl = `${BASE_URL}${myUrl}&utm_source=accesstrade`;
         console.log(">>>>>>>>>>>>>>>>>>>>>>>", accessTradeUrl);
 
-        window.location.replace(accessTradeUrl);
+        window.location.href = accessTradeUrl;
       }
     });
   });
