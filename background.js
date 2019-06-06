@@ -68,7 +68,8 @@ function initKey() {
       key = ACCESS_TRADE_KEY;
     }
     localStorage.setItem(LOCAL_STORAGE_ACCESS_TRADE_KEY, key);
-    
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+
     alert(`Your access trade key ${key} has been setted`);
   }
   return;
